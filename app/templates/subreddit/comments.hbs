@@ -2,9 +2,9 @@
   {{#card.header as |header|}}
       {{#header.text as |text|}}
         {{#text.title}}
-          {{#link-to 'subreddit.comments' model.id model.slug}}
+          <a href={{model.url}} title={{model.title}} target="_blank">
             {{model.title}}
-          {{/link-to}}
+          </a>
           {{#if gilded}}
             {{paper-icon 'new_releases'}}
           {{/if}}
