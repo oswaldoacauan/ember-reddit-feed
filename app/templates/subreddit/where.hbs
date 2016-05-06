@@ -1,0 +1,42 @@
+{{#each model as |post|}}
+  {{#paper-card as |card|}}
+    {{#card.header as |header|}}
+        {{#header.text as |text|}}
+          {{#text.title}}
+            {{#link-to 'subreddit.comments' post.id post.slug}}
+              {{post.title}}
+            {{/link-to}}
+            {{#if gilded}}
+              {{paper-icon 'new_releases'}}
+            {{/if}}
+          {{/text.title}}
+        {{#text.subhead}}
+          submitted {{moment-from-now post.created}} by {{post.author}}
+        {{/text.subhead}}
+      {{/header.text}}
+
+      <span>
+        {{#link-to 'subreddit.comments' post.id post.slug}}
+          {{paper-icon 'mode_comment'}}
+        {{/link-to}}
+        {{#paper-button iconButton=true}}
+          {{paper-icon 'arrow_upward'}}
+        {{/paper-button}}
+        <small><strong>{{post.score}}</strong></small>
+        {{#paper-button iconButton=true}}
+          {{paper-icon 'arrow_downward'}}
+        {{/paper-button}}
+      </span>
+    {{/card.header}}
+
+    {{#if post.media}}
+      {{{post.media}}}
+    {{else if post.image}}
+      {{card.image src=post.image.url alt=post.title title=post.title}}
+    {{else if post.selftext}}
+      {{#card.content}}
+        {{markdown-to-html markdown=post.selftext}}
+      {{/card.content}}
+    {{/if}}
+  {{/paper-card}}
+{{/each}}

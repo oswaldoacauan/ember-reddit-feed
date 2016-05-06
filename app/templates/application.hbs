@@ -1,3 +1,26 @@
-<h2 id="title">Welcome to Ember</h2>
+{{#paper-nav-container class="main-container"}}
+  {{#paper-sidenav class="md-sidenav-left md-whiteframe-z2" locked-open="gt-sm"}}
+    {{#paper-toolbar}}
+      <div class="md-toolbar-tools">
+        <div class="logo">
+          <strong>Subreddits</strong>
+        </div>
+      </div>
+    {{/paper-toolbar}}
 
-{{outlet}}
+    {{#paper-content}}
+      {{#paper-list}}
+        {{#each model as |subreddit|}}
+          {{#paper-item onClick=(transition-to 'subreddit' subreddit.name)}}
+            /r/{{subreddit.name}}
+          {{/paper-item}}
+          {{paper-divider}}
+        {{/each}}
+      {{/paper-list}}
+    {{/paper-content}}
+  {{/paper-sidenav}}
+
+  <div layout="column" tabindex="-1" role="main" flex>
+    {{outlet}}
+  </div>
+{{/paper-nav-container}}

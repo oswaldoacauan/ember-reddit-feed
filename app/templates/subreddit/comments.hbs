@@ -1,0 +1,66 @@
+{{#paper-card as |card|}}
+  {{#card.header as |header|}}
+      {{#header.text as |text|}}
+        {{#text.title}}
+          {{#link-to 'subreddit.comments' model.id model.slug}}
+            {{model.title}}
+          {{/link-to}}
+          {{#if gilded}}
+            {{paper-icon 'new_releases'}}
+          {{/if}}
+        {{/text.title}}
+      {{#text.subhead}}
+        submitted {{moment-from-now model.created}} by {{model.author}}
+      {{/text.subhead}}
+    {{/header.text}}
+
+    <span>
+      {{#paper-button iconButton=true}}
+        {{paper-icon 'arrow_upward'}}
+      {{/paper-button}}
+      <small><strong>{{model.score}}</strong></small>
+      {{#paper-button iconButton=true}}
+        {{paper-icon 'arrow_downward'}}
+      {{/paper-button}}
+    </span>
+  {{/card.header}}
+
+  {{#if model.media}}
+    {{{model.media}}}
+  {{else if model.image}}
+    {{card.image src=model.image.url alt=model.title title=model.title}}
+  {{else if model.selftext}}
+    {{#card.content}}
+      {{markdown-to-html markdown=model.selftext}}
+    {{/card.content}}
+  {{/if}}
+{{/paper-card}}
+
+{{#paper-content class="md-whiteframe-z1 list-demo"}}
+  {{#paper-list}}
+    {{#paper-subheader class="md-no-sticky"}}Comments ({{model.comments.length}}){{/paper-subheader}}
+    {{paper-divider}}
+    {{#each model.comments as |comment|}}
+      {{#paper-item class="md-3-line"}}
+        <div class="md-list-item-text">
+          <b>
+            <small>submitted {{moment-from-now comment.created}} by {{comment.author}}</small>
+          </b>
+          <p>
+            {{markdown-to-html markdown=comment.body}}
+          </p>
+        </div>
+        <div>
+          {{#paper-button iconButton=true}}
+            {{paper-icon 'arrow_upward'}}
+          {{/paper-button}}
+          <small><strong>{{comment.score}}</strong></small>
+          {{#paper-button iconButton=true}}
+            {{paper-icon 'arrow_downward'}}
+          {{/paper-button}}
+        </div>
+      {{/paper-item}}
+      {{paper-divider}}
+    {{/each}}
+  {{/paper-list}}
+{{/paper-content}}

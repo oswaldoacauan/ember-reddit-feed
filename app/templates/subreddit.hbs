@@ -1,0 +1,33 @@
+{{#paper-toolbar}}
+  <div class="md-toolbar-tools">
+    {{#paper-sidenav-toggle as |toggle|}}
+      {{#paper-button target=toggle action="toggleMenu" icon-button=true}}{{paper-icon "menu"}}{{/paper-button}}
+    {{/paper-sidenav-toggle}}
+    <span class="md-breadcrumb-page">
+      <h3>
+        <small>{{model.url}}</small> |
+        {{model.title}}
+      </h3>
+    </span>
+  </div>
+{{/paper-toolbar}}
+
+{{#paper-toolbar}}
+  <div class="md-toolbar-tools">
+    {{#paper-button onClick=(transition-to 'subreddit.where' 'hot')}}Hot{{/paper-button}}
+    {{#paper-button onClick=(transition-to 'subreddit.where' 'new')}}New{{/paper-button}}
+    {{#paper-button onClick=(transition-to 'subreddit.where' 'rising')}}Rising{{/paper-button}}
+    {{#paper-button onClick=(transition-to 'subreddit.where' 'controversial')}}Controversial{{/paper-button}}
+    {{#paper-button onClick=(transition-to 'subreddit.where' 'top')}}Top{{/paper-button}}
+  </div>
+{{/paper-toolbar}}
+
+{{#paper-content class="md-padding"}}
+  {{#if isLoading}}
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      {{paper-progress-circular diameter=128}}
+    </div>
+  {{else}}
+    {{outlet}}
+  {{/if}}
+{{/paper-content}}
